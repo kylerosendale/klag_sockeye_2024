@@ -79,7 +79,7 @@ harv_estimates <- tribble(
   "interviews", sum(creel$interview),
   "interview_prop", sum(creel$interview) / nrow(creel),
   "max_harv", harv_date$harv_est) %>%
-  write_csv(file = here::here("results", "01_harv_estimates.csv"))
+  print()
 
 # Make .csv for reporting dates
 harv_dates <- tribble(
@@ -87,7 +87,7 @@ harv_dates <- tribble(
   "first_sock", min(creel_daily$date),
   "last_sock", max(creel_daily$date),
   "max_harv", harv_date$date) %>%
-  write_csv(file = here::here("results", "01_harv_dates.csv"))
+  print()
 
 
 ###########################################################################
@@ -106,7 +106,8 @@ creel_table <- creel %>%
             var_2 = n ^ 2 * (1 - int / n) * var * (n / (int * int - 1)),
             cv = sqrt(var_2) / harv_exp * 100) %>%
   select(gear, n, int, harv_rep, mean, sd, cv, harv_exp) %>%
-  arrange(desc(harv_exp))
+  arrange(desc(harv_exp)) %>%
+  print()
 
 # Make table for report
 creel_table %>%
@@ -149,10 +150,7 @@ creel_table %>%
     column_labels.border.bottom.width = px(3),
     table.border.bottom.color = "black",
     table.border.bottom.width = px(3)
-  ) %>%
-
-# Save table
-gtsave(here("plots", "01_creel_summary.png"))
+  )
 
 
 ###########################################################################
@@ -173,6 +171,6 @@ appx <- creel %>%
     interview = "Interview?"
   ) %>%
   opt_stylize(style = 6, color = 'gray') %>%
-  gtsave(here("appendices", "01_creel.png"))
+  print()
 
 ```
